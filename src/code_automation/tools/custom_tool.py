@@ -1,19 +1,40 @@
-from crewai.tools import BaseTool
-from typing import Type
-from pydantic import BaseModel, Field
+from crewai.tools import tool
+import datetime
 
+@tool
+def save_to_markdown(agent_name: str, path: str, filename: str, text: str) -> str:
+    """
+    Saves job titles and descriptions to a markdown file
 
-class MyCustomToolInput(BaseModel):
-    """Input schema for MyCustomTool."""
-    argument: str = Field(..., description="Description of the argument.")
+    Args:
+        agent_name: The name of the agent that generated the text.
+        path: Location to save markdown file
+        filename: Name of markdown file
+        text: The text to save.
 
-class MyCustomTool(BaseTool):
-    name: str = "Name of my tool"
-    description: str = (
-        "Clear description for what this tool is useful for, your agent will need this information to use it."
-    )
-    args_schema: Type[BaseModel] = MyCustomToolInput
+    Returns:
+        A message indicating the file has been saved.
+    """
+    try:
+        with open(path + filename, "w", encoding="utf-8") as f:
+            f.write(text)
+            f.write("\n\nEntry time: " + str(datetime.datetime.now()))
+        return f"Text saved to {filename}"
+    except Exception as e:
+        return f"Error saving to {filename}: {e}"
 
-    def _run(self, argument: str) -> str:
-        # Implementation goes here
-        return "this is an example of a tool output, ignore it and move along."
+@tool
+def read_from_markdown(path: str, filename: str) -> str:
+    """
+    Reads content from a markdown file
+    Args:
+        path: Location of markdown file
+        filename: Name of markdown file
+    Returns:
+        The content of the markdown file as a string.
+    """
+    try:
+        with open(path + filename, "r", encoding="utf-8") as f:
+            return f.read()
+    except Exception as e:
+        return f"Error reading content: {e}"

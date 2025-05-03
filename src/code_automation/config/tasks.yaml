@@ -1,18 +1,28 @@
 software_thinking_task:
   description: >
-    Generate three distinct and innovative software project ideas about {topic} 
-    that a solo developer could realistically build within 1 to 2 weeks.
+    Generate three distinct and innovative software project ideas about AI Agents 
+    that a solo developer could realistically build within 1 to 2 weeks. 
     Briefly explain the core functionality and potential user benefit of each idea.
+    Then save the output as a markdown file using the `save_to_markdown` tool 
+    with filename `ideas.md` in the `outputs/` folder.
   expected_output: >
-    A markdown file containing the list of ideas
-    Markdown file location : {ideas_file_path}
+    A markdown file saved at outputs/ideas.md containing 3 ideas with name, functionality, and benefit.
+
 
 solution_architect_task:
   description: >
-    Read the project ideas from {ideas_file_path} and design a detailed implementation plan for each of them. 
-    Break down features, decide on technologies, and outline a rough system architecture.
-    Write the plan in separate markdown file for each idea.
+    Read the project ideas from outputs/, and for each one, design a detailed implementation plan. 
+    Break down features, decide on technologies, and outline a rough system architecture. 
+    Write each plan in a separate markdown file.
   expected_output: >
-    Separate markdown files containing individal plan for an idea.
-    Save the file for an idea at specified location with name of the idea and .md extension
-    Markdown file location : {plan_files_folder}
+    A set of markdown files in outputs/plans/, one for each idea, with implementation details.
+
+code_optimization_task:
+  description: >
+    Read the implementation plans from outputs/plans/, select the idea titled "{idea_name}", 
+    and write clean optimized starter code for its core feature. 
+    The code should be readable, efficient, and follow best practices.
+
+  expected_output: >
+    A Python markdown file saved to outputs/final_code.md implementing the main functionality of "{idea_name}".
+
